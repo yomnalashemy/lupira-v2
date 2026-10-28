@@ -1,0 +1,60 @@
+{
+  "model_type": "SVM",
+  "training_dataset": "GSE50772",
+  "training_n_samples": 81,
+  "validation_datasets": [
+    "GSE72509",
+    "GSE49454"
+  ],
+  "metrics": {
+    "cv_auc": 1.0,
+    "cv_f1": 0.9673,
+    "cv_sensitivity": 0.9692,
+    "cv_specificity": 0.9,
+    "external_auc_by_dataset": {
+      "GSE72509": 0.8429,
+      "GSE49454": 0.7675
+    }
+  },
+  "n_features": 25,
+  "top_features": [
+    "CXCL8",
+    "F2R",
+    "FOSB",
+    "PLXDC1",
+    "A2M-AS1",
+    "EGR1",
+    "LTK",
+    "SLC25A18",
+    "DUSP1",
+    "FOS"
+  ],
+  "notes": "Trained on GSE50772 only (Affymetrix), not merged with GSE72509 (a different measurement technology, RNA-seq) \u2014 see project notes on cross-platform ComBat merging being scientifically invalid here. Both GSE72509 and GSE49454 are independent external validation sets, never used in feature selection or training.",
+  "required_genes": [
+    "CXCL8",
+    "F2R",
+    "FOSB",
+    "PLXDC1",
+    "A2M-AS1",
+    "EGR1",
+    "LTK",
+    "SLC25A18",
+    "DUSP1",
+    "FOS",
+    "RNASE1",
+    "GPR125",
+    "SCD5",
+    "PTGDS",
+    "KIAA0087",
+    "CXCL2",
+    "ABCA1",
+    "CCDC13",
+    "SGK1",
+    "ZNF593",
+    "LAMP3",
+    "PSG11",
+    "BRE-AS1",
+    "LRRC37A2",
+    "PRODH2"
+  ]
+}

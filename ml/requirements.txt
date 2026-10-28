@@ -1,0 +1,13 @@
+GEOparse
+pandas
+numpy
+scikit-learn
+xgboost
+shap
+matplotlib
+seaborn
+inmoose
+statsmodels
+scipy
+joblib
+pytest

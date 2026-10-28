@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* Clinical, not flashy — per spec section 3.1. No gradients, no
+   glassmorphism, clean borders, clear hierarchy. */
+:root {
+  --background: #ffffff;
+  --foreground: #1a202c;
+  --card: #f7fafc;
+  --border: #e2e8f0;
+  --primary: #1a365d;
+  --risk-high: #c53030;
+  --risk-moderate: #d69e2e;
+  --risk-healthy: #276749;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-risk-high: var(--risk-high);
+  --color-risk-moderate: var(--risk-moderate);
+  --color-risk-healthy: var(--risk-healthy);
+  --font-sans: var(--font-inter);
+  --font-serif: Georgia, "Times New Roman", serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}

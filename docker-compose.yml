@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - db_data:/app/data
+    environment:
+      # absolute path into the mounted volume — db.py's own relative
+      # default (sqlite:///./lupira.db) would land inside the
+      # container's ephemeral /app instead, and be lost on restart
+      - DATABASE_URL=sqlite:////app/data/lupira.db
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

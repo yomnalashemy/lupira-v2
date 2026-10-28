@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# ML data/artifacts — raw datasets are re-downloaded by the pipeline,
+# not committed (GSE72509's RPKM file alone is ~90MB) or reproducible
+# intermediate output. ml/results/ and backend/app/artifacts/ ARE
+# committed (all <150KB total) — per spec section 4.3, model artifacts
+# are small enough to track directly.
+ml/data/raw/
+ml/data/processed/
+ml/.venv/
+# a stray ml/src/data/raw/ also appeared once from running a script
+# with cwd=ml/src instead of ml/ — excluded broadly rather than fixed
+# at the source, since it's real downloaded cache either way
+**/data/raw/
+**/data/processed/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+
+# Env files
+.env
+.env.local
+
+# Databases
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
