@@ -18,6 +18,13 @@ services:
         NEXT_PUBLIC_API_URL: http://localhost:8000/api
     ports:
       - "3000:3000"
+    environment:
+      # server-side fetches run inside this container, where "backend"
+      # resolves via Docker's compose network DNS — "localhost" would
+      # mean this container itself. See lib/api.ts for the full story;
+      # this was found by actually testing cross-container networking,
+      # not assumed to work.
+      - INTERNAL_API_URL=http://backend:8000/api
     depends_on:
       - backend
 

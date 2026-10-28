@@ -7,7 +7,19 @@ import type {
   TemporalRelation,
 } from "./types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+// Server Components (page.tsx's async home/about pages) run their fetch
+// INSIDE the frontend container, where "localhost" means the container
+// itself, not the backend container — confirmed by actually testing this
+// in Docker, not assumed. The browser's own fetches (everything in
+// components/*.tsx marked "use client") run on the host/user's machine,
+// where localhost correctly reaches the backend's published port. These
+// need different base URLs in a multi-container deployment:
+// INTERNAL_API_URL (server-only, never sent to the client bundle) for
+// the server-side case, NEXT_PUBLIC_API_URL for the browser case. Same
+// value by default, so plain `next dev`/`next start` on one host needs
+// no extra config — only docker-compose.yml sets them differently.
+const PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const API_URL = typeof window === "undefined" ? process.env.INTERNAL_API_URL || PUBLIC_API_URL : PUBLIC_API_URL;
 
 export class ApiError extends Error {
   status: number;
