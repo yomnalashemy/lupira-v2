@@ -22,7 +22,7 @@ app = FastAPI(title="Lupira API", version="2.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "https://lupira-v2.vercel.app"],
     allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
