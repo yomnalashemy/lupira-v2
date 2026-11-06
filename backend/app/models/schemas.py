@@ -20,10 +20,18 @@ class PredictResponse(BaseModel):
     timestamp: datetime
     genes_used: int
     genes_expected: int
+    # echoed back so the client can request /explain without the server
+    # needing to have persisted this prediction — see ExplainRequest
+    gene_expression: dict[str, float]
 
 
 class ExplainRequest(BaseModel):
-    prediction_id: str
+    # the client already has this from PredictResponse.gene_expression —
+    # sending it back directly means /explain has no dependency on the
+    # prediction row still existing server-side (SQLite on Render's free
+    # tier is wiped on every spin-down, so a lookup-by-id would 404 for
+    # any prediction made before the last idle restart)
+    gene_expression: dict[str, float]
 
 
 class ShapContribution(BaseModel):

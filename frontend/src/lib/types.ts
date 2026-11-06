@@ -10,6 +10,7 @@ export interface PredictResponse {
   timestamp: string;
   genes_used: number;
   genes_expected: number;
+  gene_expression: Record<string, number>;
 }
 
 export interface ShapContribution {

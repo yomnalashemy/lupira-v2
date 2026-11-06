@@ -37,4 +37,5 @@ def predict(req: PredictRequest, db: Session = Depends(get_session)):
         timestamp=row.created_at or datetime.utcnow(),
         genes_used=result["genes_used"],
         genes_expected=result["genes_expected"],
+        gene_expression=req.gene_expression,
     )

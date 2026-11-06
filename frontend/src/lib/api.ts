@@ -48,10 +48,10 @@ export function predict(geneExpression: Record<string, number>, patientId?: stri
   });
 }
 
-export function explain(predictionId: string): Promise<ExplainResponse> {
+export function explain(geneExpression: Record<string, number>): Promise<ExplainResponse> {
   return request<ExplainResponse>("/explain", {
     method: "POST",
-    body: JSON.stringify({ prediction_id: predictionId }),
+    body: JSON.stringify({ gene_expression: geneExpression }),
   });
 }
 

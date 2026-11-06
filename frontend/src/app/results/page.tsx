@@ -29,7 +29,7 @@ function ResultsContent() {
 
   useEffect(() => {
     if (!id || !result) return;
-    explain(id)
+    explain(result.gene_expression)
       .then(setExplanation)
       .catch((e) => setError(e instanceof ApiError ? e.message : "Could not load explanation."));
   }, [id, result]);

@@ -36,11 +36,21 @@ def test_predict_malformed_request_returns_422(client):
 
 
 def test_predict_stores_in_database(client, real_sle_expression):
+    """Storage is now bookkeeping only — /explain no longer depends on
+    it (see test_explain.py) — so check the row directly rather than
+    through another endpoint."""
+    from app.models.db import Prediction, SessionLocal
+
     resp = client.post("/api/predict", json={"gene_expression": real_sle_expression, "patient_id": "p-123"})
     prediction_id = resp.json()["prediction_id"]
-    # confirmed indirectly: /explain looks it up by id, 404 means it wasn't stored
-    explain_resp = client.post("/api/explain", json={"prediction_id": prediction_id})
-    assert explain_resp.status_code == 200
+
+    db = SessionLocal()
+    try:
+        row = db.get(Prediction, prediction_id)
+        assert row is not None
+        assert row.patient_id == "p-123"
+    finally:
+        db.close()
 
 
 def test_confidence_thresholds_correct(client, real_sle_expression, real_healthy_expression):
