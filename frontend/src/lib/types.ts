@@ -11,6 +11,8 @@ export interface PredictResponse {
   genes_used: number;
   genes_expected: number;
   gene_expression: Record<string, number>;
+  input_quality: "typical" | "unusual";
+  input_quality_note: string | null;
 }
 
 export interface ShapContribution {

@@ -53,6 +53,40 @@ def test_predict_stores_in_database(client, real_sle_expression):
         db.close()
 
 
+def test_predict_typical_input_flagged_typical(client, real_sle_expression):
+    resp = client.post("/api/predict", json={"gene_expression": real_sle_expression})
+    body = resp.json()
+    assert body["input_quality"] == "typical"
+    assert body["input_quality_note"] is None
+
+
+def test_predict_wildly_different_scale_flagged_unusual(client, real_sle_expression):
+    """A real sample's values scaled 1000x land nowhere near the training
+    distribution (log2 intensities, roughly 2-16) — simulating e.g. raw
+    RNA-seq counts or a different platform's units uploaded by mistake.
+    This should be flagged, not silently scored as if it were valid."""
+    shifted = {gene: value * 1000 for gene, value in real_sle_expression.items()}
+    resp = client.post("/api/predict", json={"gene_expression": shifted})
+    body = resp.json()
+    assert body["input_quality"] == "unusual"
+    assert body["input_quality_note"] is not None
+
+
+def test_predict_missing_genes_imputed_as_training_mean_not_zero(client, real_sle_expression):
+    """Regression check for the imputation bug: a missing gene used to be
+    filled with raw 0, which becomes a large-magnitude z-score once run
+    through the training scaler (log2 intensities are never near 0) —
+    silently telling the model "very low expression" instead of "unknown".
+    Dropping most genes should still be flagged typical as long as the
+    few genes that ARE present are on-scale, since the rest are now
+    imputed at the training mean (z=0), not an extreme value."""
+    partial = dict(list(real_sle_expression.items())[:5])
+    resp = client.post("/api/predict", json={"gene_expression": partial})
+    body = resp.json()
+    assert body["genes_used"] == 5
+    assert body["input_quality"] == "typical"
+
+
 def test_confidence_thresholds_correct(client, real_sle_expression, real_healthy_expression):
     for expr in (real_sle_expression, real_healthy_expression):
         resp = client.post("/api/predict", json={"gene_expression": expr})

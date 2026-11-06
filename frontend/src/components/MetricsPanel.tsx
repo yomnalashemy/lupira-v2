@@ -10,6 +10,12 @@ export default function MetricsPanel({ info }: { info: ModelInfoResponse }) {
         selected genes.
       </p>
 
+      <p className="mt-3 text-sm text-foreground/80">
+        In testing, this model correctly identified lupus patterns in about {Math.round(m.cv_sensitivity * 100)}%
+        of confirmed lupus cases, and correctly ruled out lupus in about {Math.round(m.cv_specificity * 100)}% of
+        healthy cases.
+      </p>
+
       <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Metric label="Internal CV AUC" value={m.cv_auc} />
         <Metric label="Internal CV F1" value={m.cv_f1} />

@@ -6,15 +6,15 @@ import "./globals.css";
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Lupira — AI-Powered Lupus Diagnostic Platform",
+  title: "Lupira — Lupus Research & Screening Tool",
   description:
-    "Research tool for SLE classification using blood gene-expression profiles and NPSLE risk assessment based on ACR 1999 case definitions.",
+    "A research and educational tool that helps make sense of lupus (SLE) blood-test results and screens for neuropsychiatric lupus symptoms. Not a medical device — not for clinical decision-making.",
 };
 
 const NAV = [
-  { href: "/", label: "Overview" },
-  { href: "/predict", label: "Predict" },
-  { href: "/npsle", label: "NPSLE Assessment" },
+  { href: "/", label: "Home" },
+  { href: "/predict", label: "Check My Results" },
+  { href: "/npsle", label: "Symptom Screening" },
   { href: "/about", label: "About the Research" },
 ];
 

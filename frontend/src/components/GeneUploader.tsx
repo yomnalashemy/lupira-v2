@@ -32,7 +32,10 @@ export default function GeneUploader({ requiredGenes, onParsed }: Props) {
           parsed.push({ gene, value });
         }
         if (parsed.length === 0) {
-          setError("No valid gene,value rows found. Expected a CSV/TSV with gene symbol in column 1, expression value in column 2.");
+          setError(
+            "We couldn't read any valid rows from this file. It should have a gene name in the first " +
+            "column and an expression value in the second — check with your lab if you're unsure of the format.",
+          );
           return;
         }
 
@@ -45,8 +48,8 @@ export default function GeneUploader({ requiredGenes, onParsed }: Props) {
 
         if (coverage < MIN_COVERAGE) {
           setError(
-            `Only ${requiredGenes.length - missingGenes.length}/${requiredGenes.length} required genes found ` +
-            `(need at least ${Math.round(MIN_COVERAGE * 100)}%). Missing: ${missingGenes.join(", ")}`,
+            `This file only covers ${requiredGenes.length - missingGenes.length} of the ${requiredGenes.length} ` +
+            `genes we need (at least ${Math.round(MIN_COVERAGE * 100)}% required). Missing: ${missingGenes.join(", ")}`,
           );
           return;
         }
@@ -79,10 +82,10 @@ export default function GeneUploader({ requiredGenes, onParsed }: Props) {
         }`}
       >
         <p className="text-sm text-foreground/70">
-          Drag and drop a CSV/TSV file here, or click to browse.
+          Drag and drop your results file here, or click to browse.
         </p>
         <p className="mt-1 text-xs text-foreground/50">
-          Column 1: gene symbol. Column 2: expression value.
+          Works with the file as exported by your lab — gene names in one column, values in the next.
         </p>
         <input
           ref={inputRef}
@@ -105,7 +108,7 @@ export default function GeneUploader({ requiredGenes, onParsed }: Props) {
       {rows.length > 0 && !error && (
         <div className="mt-4">
           <p className="text-sm text-risk-healthy">
-            {requiredGenes.length - missing.length}/{requiredGenes.length} required genes found.
+            Good — this file covers {requiredGenes.length - missing.length} of the {requiredGenes.length} genes we need.
           </p>
           <p className="mt-2 text-xs text-foreground/50">Preview (first 10 rows):</p>
           <table className="mt-1 w-full text-xs">

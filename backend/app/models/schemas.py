@@ -23,6 +23,8 @@ class PredictResponse(BaseModel):
     # echoed back so the client can request /explain without the server
     # needing to have persisted this prediction — see ExplainRequest
     gene_expression: dict[str, float]
+    input_quality: Literal["typical", "unusual"]
+    input_quality_note: str | None = None
 
 
 class ExplainRequest(BaseModel):

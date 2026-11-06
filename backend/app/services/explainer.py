@@ -23,7 +23,7 @@ def explain(gene_expression: dict[str, float], top_n: int = 15) -> dict:
     _, scaler, genes, _ = load_model()
     explainer = get_explainer()
 
-    X_raw, _ = vectorize(gene_expression, genes)
+    X_raw, _, _ = vectorize(gene_expression, genes, scaler)
     X = scaler.transform(X_raw)
 
     shap_values = explainer.shap_values(X, nsamples=100, silent=True)

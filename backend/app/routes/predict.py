@@ -38,4 +38,6 @@ def predict(req: PredictRequest, db: Session = Depends(get_session)):
         genes_used=result["genes_used"],
         genes_expected=result["genes_expected"],
         gene_expression=req.gene_expression,
+        input_quality=result["input_quality"],
+        input_quality_note=result["input_quality_note"],
     )

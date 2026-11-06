@@ -8,8 +8,22 @@ export default function ShapChart({ contributions }: { contributions: ShapContri
     .sort((a, b) => a.value - b.value)
     .map((c) => ({ ...c, label: c.gene }));
 
+  const top3 = [...contributions].sort((a, b) => Math.abs(b.value) - Math.abs(a.value)).slice(0, 3);
+
   return (
     <div>
+      {top3.length > 0 && (
+        <p className="mb-3 text-sm text-foreground/70">
+          The genes with the biggest influence on this result were{" "}
+          {top3.map((c, i) => (
+            <span key={c.gene}>
+              <strong>{c.gene}</strong>
+              {i < top3.length - 2 ? ", " : i === top3.length - 2 ? ", and " : ""}
+            </span>
+          ))}
+          .
+        </p>
+      )}
       <BarChart width={640} height={Math.max(260, data.length * 28)} data={data} layout="vertical" margin={{ left: 80 }}>
         <CartesianGrid strokeDasharray="3 3" horizontal={false} />
         <XAxis type="number" tickFormatter={(v: number) => v.toFixed(2)} />

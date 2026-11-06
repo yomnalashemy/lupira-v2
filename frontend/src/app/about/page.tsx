@@ -1,3 +1,4 @@
+import Link from "next/link";
 import MetricsPanel from "@/components/MetricsPanel";
 import { getModelInfo } from "@/lib/api";
 
@@ -8,6 +9,14 @@ export default async function AboutPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-8 font-serif">
+      <div className="rounded border border-accent/30 bg-accent-soft px-4 py-2 text-sm font-sans text-foreground/80">
+        Looking for your results or a symptom screening instead?{" "}
+        <Link href="/" className="text-accent underline">
+          Go to Home
+        </Link>
+        .
+      </div>
+
       <div>
         <h1 className="text-2xl text-primary">About the Research</h1>
         <p className="mt-3 text-foreground/80 leading-relaxed">

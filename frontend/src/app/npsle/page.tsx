@@ -24,7 +24,8 @@ export default function NpslePage() {
       );
       setResult(res);
     } catch (e) {
-      setError(e instanceof ApiError ? e.message : "Could not reach the Lupira API.");
+      if (e instanceof ApiError) console.error("NPSLE scoring failed:", e.status, e.message);
+      setError("We couldn't calculate your score right now — please try again in a moment.");
     } finally {
       setLoading(false);
     }
@@ -32,12 +33,14 @@ export default function NpslePage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 space-y-6">
-      <h1 className="font-serif text-2xl text-primary">NPSLE Assessment</h1>
+      <h1 className="text-2xl font-semibold text-primary">Symptom Screening</h1>
       <DisclaimerBanner />
       <p className="text-sm text-foreground/70">
-        Select any observed neuropsychiatric syndromes from the ACR 1999 case definitions. This is a
-        screening aid, not a diagnosis — see the note below the result for what the weighting does and
-        doesn&rsquo;t represent.
+        If you&rsquo;ve already been diagnosed with lupus, this checklist screens for neuropsychiatric lupus
+        (NPSLE) — neurological or psychiatric symptoms that can occur alongside lupus. Check anything
+        you&rsquo;ve experienced; each item has a plain-language explanation below it. This is a screening
+        aid based on established clinical criteria, not a diagnosis — see the note below the result for
+        what the weighting does and doesn&rsquo;t represent.
       </p>
 
       <NpsleForm onSubmit={handleSubmit} loading={loading} />

@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
-/* Clinical, not flashy — per spec section 3.1. No gradients, no
-   glassmorphism, clean borders, clear hierarchy. */
+/* Credible, not cold. Keeps the navy brand color and the clinically
+   meaningful risk colors untouched; softens the stark white/gray
+   "medical journal" base so patient-facing pages feel welcoming rather
+   than depressing. font-serif is now opt-in per page (About the
+   Research) rather than the default register everywhere. */
 :root {
-  --background: #ffffff;
+  --background: #fbfaf7;
   --foreground: #1a202c;
   --card: #f7fafc;
   --border: #e2e8f0;
   --primary: #1a365d;
+  --accent: #2c7a7b;
+  --accent-soft: #e6f3f2;
   --risk-high: #c53030;
   --risk-moderate: #d69e2e;
   --risk-healthy: #276749;
+  --shadow-soft: 0 1px 3px rgba(26, 32, 44, 0.06), 0 1px 2px rgba(26, 32, 44, 0.04);
 }
 
 @theme inline {
@@ -19,6 +25,8 @@
   --color-card: var(--card);
   --color-border: var(--border);
   --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
   --color-risk-high: var(--risk-high);
   --color-risk-moderate: var(--risk-moderate);
   --color-risk-healthy: var(--risk-healthy);
@@ -29,4 +37,8 @@
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
 }
